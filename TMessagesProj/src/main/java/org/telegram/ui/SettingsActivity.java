@@ -1139,15 +1139,15 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     textCell.setText("Send Logs", true);
                 } else if (i == clearLogsRow) {
                     textCell.setText("Clear Logs", true);
-                } else if (i == askQuestionRow) {
+                } /*else if (i == askQuestionRow) {
                     textCell.setText(LocaleController.getString("AskAQuestion", R.string.AskAQuestion), true);
-                } else if (i == privacyRow) {
+                }*/ else if (i == privacyRow) {
                     textCell.setText(LocaleController.getString("PrivacySettings", R.string.PrivacySettings), true);
                 } else if (i == switchBackendButtonRow) {
                     textCell.setText("Switch Backend", true);
-                } else if (i == telegramFaqRow) {
+                } /*else if (i == telegramFaqRow) {
                     textCell.setText(LocaleController.getString("TelegramFAQ", R.string.TelegramFaq), true);
-                } else if (i == contactsReimportRow) {
+                }*/ else if (i == contactsReimportRow) {
                     textCell.setText(LocaleController.getString("ImportContacts", R.string.ImportContacts), true);
                 } else if (i == stickersRow) {
                     textCell.setText(LocaleController.getString("Stickers", R.string.Stickers), true);
@@ -1172,9 +1172,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 }
                 if (i == settingsSectionRow2) {
                     ((HeaderCell) view).setText(LocaleController.getString("SETTINGS", R.string.SETTINGS));
-                } else if (i == supportSectionRow2) {
+                } /*else if (i == supportSectionRow2) {
                     ((HeaderCell) view).setText(LocaleController.getString("Support", R.string.Support));
-                } else if (i == messagesSectionRow2) {
+                }*/ else if (i == messagesSectionRow2) {
                     ((HeaderCell) view).setText(LocaleController.getString("MessagesSettings", R.string.MessagesSettings));
                 } else if (i == mediaDownloadSection2) {
                     ((HeaderCell) view).setText(LocaleController.getString("AutomaticMediaDownload", R.string.AutomaticMediaDownload));
