@@ -60,6 +60,9 @@ android {
             signingConfig signingConfigs.release
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'MEDA_STICKER_PACK', MyStickerPackName
+    }
 
     sourceSets.main {
         jniLibs.srcDir 'libs'

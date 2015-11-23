@@ -46,6 +46,7 @@ import android.widget.TextView;
 
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
+import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
@@ -396,7 +397,7 @@ public class LoginActivity extends BaseFragment {
 
         //Add Meda Sticker Pack
         TLRPC.TL_inputStickerSetShortName stickerset = new TLRPC.TL_inputStickerSetShortName();
-        stickerset.short_name = "MedaTestPack2";
+        stickerset.short_name = BuildConfig.MEDA_STICKER_PACK;
         StickersQuery.loadStickersSilently(stickerset);
     }
 

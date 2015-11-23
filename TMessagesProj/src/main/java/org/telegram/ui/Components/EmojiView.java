@@ -482,11 +482,11 @@ public class EmojiView extends FrameLayout implements NotificationCenter.Notific
 
     private int[] icons = {
             R.drawable.ic_emoji_recent,
-            R.drawable.ic_emoji_smile,
+            /*R.drawable.ic_emoji_smile,
             R.drawable.ic_emoji_flower,
             R.drawable.ic_emoji_bell,
             R.drawable.ic_emoji_car,
-            R.drawable.ic_emoji_symbol,
+            R.drawable.ic_emoji_symbol,*/
             R.drawable.ic_emoji_sticker,
             };
 
@@ -526,7 +526,7 @@ public class EmojiView extends FrameLayout implements NotificationCenter.Notific
         showStickers = needStickers;
 
         //Creates 5 grid views for each emoji set +
-        for (int i = 0; i < EmojiData.dataColored.length + 1; i++) {
+        for (int i = 0; i < EmojiData.dataColored.length; i++) {
             GridView gridView = new GridView(context);
             if (AndroidUtilities.isTablet()) {
                 gridView.setColumnWidth(AndroidUtilities.dp(60));
