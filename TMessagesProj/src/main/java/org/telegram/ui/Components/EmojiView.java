@@ -526,21 +526,22 @@ public class EmojiView extends FrameLayout implements NotificationCenter.Notific
         showStickers = needStickers;
 
         //Creates 5 grid views for each emoji set +
-        for (int i = 0; i < EmojiData.dataColored.length; i++) {
-            GridView gridView = new GridView(context);
-            if (AndroidUtilities.isTablet()) {
-                gridView.setColumnWidth(AndroidUtilities.dp(60));
-            } else {
-                gridView.setColumnWidth(AndroidUtilities.dp(45));
-            }
-            gridView.setNumColumns(-1);
-            views.add(gridView);
-
-            EmojiGridAdapter emojiGridAdapter = new EmojiGridAdapter(i - 1);
-            gridView.setAdapter(emojiGridAdapter);
-            AndroidUtilities.setListViewEdgeEffectColor(gridView, 0xfff5f6f7);
-            adapters.add(emojiGridAdapter);
+        //for (int i = 0; i < EmojiData.dataColored.length; i++) {
+        GridView gridView = new GridView(context);
+        if (AndroidUtilities.isTablet()) {
+            gridView.setColumnWidth(AndroidUtilities.dp(60));
+        } else {
+            gridView.setColumnWidth(AndroidUtilities.dp(45));
         }
+        gridView.setNumColumns(-1);
+        views.add(gridView);
+
+        //EmojiGridAdapter emojiGridAdapter = new EmojiGridAdapter(i-1);
+        EmojiGridAdapter emojiGridAdapter = new EmojiGridAdapter(-1);
+        gridView.setAdapter(emojiGridAdapter);
+        AndroidUtilities.setListViewEdgeEffectColor(gridView, 0xfff5f6f7);
+        adapters.add(emojiGridAdapter);
+        //}
 
         if (showStickers) {
             StickersQuery.checkStickers();
