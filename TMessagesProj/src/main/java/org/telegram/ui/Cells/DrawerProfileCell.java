@@ -46,7 +46,7 @@ public class DrawerProfileCell extends FrameLayout {
 
     public DrawerProfileCell(Context context) {
         super(context);
-        setBackgroundColor(0xff4c84b5);
+        setBackgroundColor(0xffff8542);
 
         shadowView = new ImageView(context);
         shadowView.setVisibility(INVISIBLE);
@@ -131,7 +131,7 @@ public class DrawerProfileCell extends FrameLayout {
         nameTextView.setText(UserObject.getUserName(user));
         phoneTextView.setText(PhoneFormat.getInstance().format("+" + user.phone));
         AvatarDrawable avatarDrawable = new AvatarDrawable(user);
-        avatarDrawable.setColor(0xff5c98cd);
+        avatarDrawable.setColor(0xffff9931);
         avatarImageView.setImage(photo, "50_50", avatarDrawable);
     }
 }

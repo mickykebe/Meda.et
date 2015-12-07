@@ -70,7 +70,8 @@ public class PickerBottomLayout extends FrameLayout {
         doneButtonBadgeTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
         doneButtonBadgeTextView.setTextColor(0xffffffff);
         doneButtonBadgeTextView.setGravity(Gravity.CENTER);
-        doneButtonBadgeTextView.setBackgroundResource(isDarkTheme ? R.drawable.photobadge : R.drawable.bluecounter);
+        //doneButtonBadgeTextView.setBackgroundResource(isDarkTheme ? R.drawable.photobadge : R.drawable.bluecounter);
+        doneButtonBadgeTextView.setBackgroundResource(R.drawable.bluecounter);
         doneButtonBadgeTextView.setMinWidth(AndroidUtilities.dp(23));
         doneButtonBadgeTextView.setPadding(AndroidUtilities.dp(8), 0, AndroidUtilities.dp(8), AndroidUtilities.dp(1));
         doneButton.addView(doneButtonBadgeTextView);
