@@ -57,7 +57,9 @@ public class CheckUpdate extends AsyncTask<Void, Void, Boolean> {
         try {
             final String baseUrl = "http://meda.360ground.com/";
 
-            Uri uri = Uri.parse(baseUrl);
+            Uri uri = Uri.parse(baseUrl).buildUpon()
+                    .appendQueryParameter("v", "3.2.6(654)")
+                    .build();
 
             URL url = new URL(uri.toString());
 
