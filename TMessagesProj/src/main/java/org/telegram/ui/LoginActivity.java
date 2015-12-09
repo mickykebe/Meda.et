@@ -395,7 +395,7 @@ public class LoginActivity extends BaseFragment {
         presentFragment(new DialogsActivity(null), true);
         NotificationCenter.getInstance().postNotificationName(NotificationCenter.mainUserInfoChanged);
 
-        //Add Meda Sticker Pack
+        //Add Meda.et Sticker Pack
         TLRPC.TL_inputStickerSetShortName stickerset = new TLRPC.TL_inputStickerSetShortName();
         stickerset.short_name = BuildConfig.MEDA_STICKER_PACK;
         StickersQuery.loadStickersSilently(stickerset);
