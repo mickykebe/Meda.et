@@ -27,6 +27,10 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 import org.telegram.messenger.AnimationCompat.AnimatorListenerAdapterProxy;
@@ -130,6 +134,8 @@ public class ActionBarLayout extends FrameLayout {
     protected Activity parentActivity = null;
 
     public ArrayList<BaseFragment> fragmentsStack = null;
+
+    private AdView mAdView;
 
     public ActionBarLayout(Context context) {
         super(context);
@@ -551,11 +557,15 @@ public class ActionBarLayout extends FrameLayout {
     }
 
     public boolean presentFragment(BaseFragment fragment) {
-        return presentFragment(fragment, false, false, true);
+        return presentFragment(fragment, false, false, true, false);
     }
 
     public boolean presentFragment(BaseFragment fragment, boolean removeLast) {
-        return presentFragment(fragment, removeLast, false, true);
+        return presentFragment(fragment, removeLast, false, true, false);
+    }
+
+    public boolean presentFragmentWithBannerAd(BaseFragment fragment){
+        return presentFragment(fragment, false, false, true, true);
     }
 
     private void startLayoutAnimation(final boolean open, final boolean first) {
@@ -604,7 +614,7 @@ public class ActionBarLayout extends FrameLayout {
         });
     }
 
-    public boolean presentFragment(final BaseFragment fragment, final boolean removeLast, boolean forceWithoutAnimation, boolean check) {
+    public boolean presentFragment(final BaseFragment fragment, final boolean removeLast, boolean forceWithoutAnimation, boolean check, boolean withBannerAd) {
         if (checkTransitionAnimation() || delegate != null && check && !delegate.needPresentFragment(fragment, removeLast, forceWithoutAnimation, this) || !fragment.onFragmentCreate()) {
             return false;
         }
@@ -624,6 +634,17 @@ public class ActionBarLayout extends FrameLayout {
             if (parent != null) {
                 parent.removeView(fragmentView);
             }
+        }
+        if(withBannerAd){
+            mAdView = new AdView(parentActivity);
+            mAdView.setAdSize(AdSize.BANNER);
+            mAdView.setAdUnitId(parentActivity.getString(R.string.ad_unit_banner));
+
+            AdRequest adRequest = new AdRequest.Builder().
+                    addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+            containerViewBack.addView(mAdView);
+            mAdView.loadAd(adRequest);
         }
         if (fragment.actionBar != null && fragment.actionBar.getAddToContainer()) {
             if (removeActionBarExtraHeight) {
@@ -748,6 +769,8 @@ public class ActionBarLayout extends FrameLayout {
         }
         return true;
     }
+
+
 
     public boolean addFragmentToStack(BaseFragment fragment) {
         return addFragmentToStack(fragment, -1);

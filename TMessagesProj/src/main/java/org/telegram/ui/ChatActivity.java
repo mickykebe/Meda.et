@@ -3424,7 +3424,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             showReplyPanel(false, null, null, null, false, true);
             return false;
         }
-        parentLayout.presentFragment(fragment, removeLast, !animated, true);
+        parentLayout.presentFragment(fragment, removeLast, !animated, true, false);
         return true;
     }
 

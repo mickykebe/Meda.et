@@ -940,7 +940,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                         closePhoto(false, false);
                         Bundle args2 = new Bundle();
                         args2.putLong("dialog_id", currentDialogId);
-                        ((LaunchActivity) parentActivity).presentFragment(new MediaActivity(args2), false, true);
+                        ((LaunchActivity) parentActivity).presentFragment(new MediaActivity(args2), false, true, false);
                     }
                 } else if (id == gallery_menu_send) {
                     /*Intent intent = new Intent(this, MessagesActivity.class);

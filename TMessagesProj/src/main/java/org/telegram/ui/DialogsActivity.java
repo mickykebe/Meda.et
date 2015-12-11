@@ -412,9 +412,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                     }
                     if (searchString != null) {
                         NotificationCenter.getInstance().postNotificationName(NotificationCenter.closeChats);
-                        presentFragment(new ChatActivity(args));
+                        presentFragmentWithBannerAd(new ChatActivity(args));
                     } else {
-                        presentFragment(new ChatActivity(args));
+                        presentFragmentWithBannerAd(new ChatActivity(args));
                     }
                 }
             }
