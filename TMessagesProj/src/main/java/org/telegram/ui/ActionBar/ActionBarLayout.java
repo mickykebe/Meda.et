@@ -27,10 +27,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.AdRequest;
-
+import org.telegram.Meda.SetParent;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 import org.telegram.messenger.AnimationCompat.AnimatorListenerAdapterProxy;
@@ -135,8 +132,6 @@ public class ActionBarLayout extends FrameLayout {
 
     public ArrayList<BaseFragment> fragmentsStack = null;
 
-    private AdView mAdView;
-
     public ActionBarLayout(Context context) {
         super(context);
         parentActivity = (Activity) context;
@@ -166,9 +161,10 @@ public class ActionBarLayout extends FrameLayout {
         layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
         containerView.setLayoutParams(layoutParams);
 
-        for (BaseFragment fragment : fragmentsStack) {
+        for (SetParent fragment : fragmentsStack) {
             fragment.setParentLayout(this);
         }
+
     }
 
     @Override
@@ -635,16 +631,12 @@ public class ActionBarLayout extends FrameLayout {
                 parent.removeView(fragmentView);
             }
         }
-        if(withBannerAd){
-            mAdView = new AdView(parentActivity);
-            mAdView.setAdSize(AdSize.BANNER);
-            mAdView.setAdUnitId(parentActivity.getString(R.string.ad_unit_banner));
-
-            AdRequest adRequest = new AdRequest.Builder().
-                    addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .build();
-            containerViewBack.addView(mAdView);
-            mAdView.loadAd(adRequest);
+        if(fragment.bannerAdView != null){
+            ViewGroup parent = (ViewGroup) fragment.bannerAdView.getParent();
+            if(parent != null) {
+                parent.removeView(fragment.bannerAdView);
+            }
+            containerViewBack.addView(fragment.bannerAdView);
         }
         if (fragment.actionBar != null && fragment.actionBar.getAddToContainer()) {
             if (removeActionBarExtraHeight) {

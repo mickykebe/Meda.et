@@ -1201,7 +1201,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                     actionBarLayout.presentFragment(new ChatActivity(args), true, false, true, true);
                 }
             });
-            presentFragment(fragment, false, true, false);
+            presentFragment(fragment, false, true);
         }
 
         if (requestId != 0) {
@@ -1347,8 +1347,8 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         actionBarLayout.presentFragment(fragment);
     }
 
-    public boolean presentFragment(final BaseFragment fragment, final boolean removeLast, boolean forceWithoutAnimation, boolean withBannerAd) {
-        return actionBarLayout.presentFragment(fragment, removeLast, forceWithoutAnimation, true, withBannerAd);
+    public boolean presentFragment(final BaseFragment fragment, final boolean removeLast, boolean forceWithoutAnimation) {
+        return actionBarLayout.presentFragment(fragment, removeLast, forceWithoutAnimation, true, false);
     }
 
     public void needLayout() {
@@ -1947,7 +1947,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
                 } else {
                     shadowTablet.setBackgroundColor(0x7F000000);
                 }
-                layersActionBarLayout.presentFragment(fragment, removeLast, forceWithoutAnimation, false, true);
+                layersActionBarLayout.presentFragment(fragment, removeLast, forceWithoutAnimation, false, false);
                 return false;
             }
             return true;
