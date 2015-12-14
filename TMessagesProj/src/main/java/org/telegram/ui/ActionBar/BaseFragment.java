@@ -17,12 +17,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+
+import org.telegram.Meda.SetParent;
 import org.telegram.messenger.AnimationCompat.AnimatorSetProxy;
 import org.telegram.messenger.FileLog;
 import org.telegram.messenger.R;
 import org.telegram.tgnet.ConnectionsManager;
 
-public class BaseFragment {
+public class BaseFragment implements SetParent {
 
     private boolean isFinished = false;
     protected Dialog visibleDialog = null;
@@ -34,6 +39,8 @@ public class BaseFragment {
     protected Bundle arguments;
     protected boolean swipeBackEnabled = true;
     protected boolean hasOwnBackground = false;
+
+    protected AdView bannerAdView;
 
     public BaseFragment() {
         classGuid = ConnectionsManager.getInstance().generateClassGuid();
@@ -86,41 +93,49 @@ public class BaseFragment {
         parentLayout = null;
     }
 
-    protected void setParentLayout(ActionBarLayout layout) {
+    protected void setFragmentViewParentLayout(){
+        if (fragmentView != null) {
+            ViewGroup parent = (ViewGroup) fragmentView.getParent();
+            if (parent != null) {
+                try {
+                    parent.removeView(fragmentView);
+                } catch (Exception e) {
+                    FileLog.e("tmessages", e);
+                }
+            }
+            if (parentLayout != null && parentLayout.getContext() != fragmentView.getContext()) {
+                fragmentView = null;
+            }
+        }
+    }
+
+    protected void setActionBarParentLayout(){
+        if (actionBar != null) {
+            ViewGroup parent = (ViewGroup) actionBar.getParent();
+            if (parent != null) {
+                try {
+                    parent.removeView(actionBar);
+                } catch (Exception e) {
+                    FileLog.e("tmessages", e);
+                }
+            }
+            if (parentLayout != null && parentLayout.getContext() != actionBar.getContext()) {
+                actionBar = null;
+            }
+        }
+        if (parentLayout != null && actionBar == null) {
+            actionBar = new ActionBar(parentLayout.getContext());
+            actionBar.parentFragment = this;
+            actionBar.setBackgroundColor(0xffff822a);
+            actionBar.setItemsBackground(R.drawable.bar_selector);
+        }
+    }
+
+    public void setParentLayout(ActionBarLayout layout) {
         if (parentLayout != layout) {
             parentLayout = layout;
-            if (fragmentView != null) {
-                ViewGroup parent = (ViewGroup) fragmentView.getParent();
-                if (parent != null) {
-                    try {
-                        parent.removeView(fragmentView);
-                    } catch (Exception e) {
-                        FileLog.e("tmessages", e);
-                    }
-                }
-                if (parentLayout != null && parentLayout.getContext() != fragmentView.getContext()) {
-                    fragmentView = null;
-                }
-            }
-            if (actionBar != null) {
-                ViewGroup parent = (ViewGroup) actionBar.getParent();
-                if (parent != null) {
-                    try {
-                        parent.removeView(actionBar);
-                    } catch (Exception e) {
-                        FileLog.e("tmessages", e);
-                    }
-                }
-                if (parentLayout != null && parentLayout.getContext() != actionBar.getContext()) {
-                    actionBar = null;
-                }
-            }
-            if (parentLayout != null && actionBar == null) {
-                actionBar = new ActionBar(parentLayout.getContext());
-                actionBar.parentFragment = this;
-                actionBar.setBackgroundColor(0xffff822a);
-                actionBar.setItemsBackground(R.drawable.bar_selector);
-            }
+            setFragmentViewParentLayout();
+            setActionBarParentLayout();
         }
     }
 
@@ -196,6 +211,10 @@ public class BaseFragment {
 
     }
 
+    public boolean presentFragmentWithBannerAd(BaseFragment fragment){
+        return parentLayout != null && parentLayout.presentFragmentWithBannerAd(fragment);
+    }
+
     public boolean presentFragment(BaseFragment fragment) {
         return parentLayout != null && parentLayout.presentFragment(fragment);
     }
@@ -205,7 +224,7 @@ public class BaseFragment {
     }
 
     public boolean presentFragment(BaseFragment fragment, boolean removeLast, boolean forceWithoutAnimation) {
-        return parentLayout != null && parentLayout.presentFragment(fragment, removeLast, forceWithoutAnimation, true);
+        return parentLayout != null && parentLayout.presentFragment(fragment, removeLast, forceWithoutAnimation, true, false);
     }
 
     public Activity getParentActivity() {

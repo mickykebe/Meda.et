@@ -50,6 +50,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.telegram.Meda.AdFragment;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.ChatObject;
@@ -134,7 +135,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
-public class ChatActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, DialogsActivity.MessagesActivityDelegate,
+public class ChatActivity extends AdFragment implements NotificationCenter.NotificationCenterDelegate, DialogsActivity.MessagesActivityDelegate,
         PhotoViewer.PhotoViewerProvider {
 
     protected TLRPC.Chat currentChat;
@@ -3424,7 +3425,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             showReplyPanel(false, null, null, null, false, true);
             return false;
         }
-        parentLayout.presentFragment(fragment, removeLast, !animated, true);
+        parentLayout.presentFragment(fragment, removeLast, !animated, true, false);
         return true;
     }
 

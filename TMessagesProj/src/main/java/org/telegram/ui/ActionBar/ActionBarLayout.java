@@ -27,6 +27,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import org.telegram.Meda.SetParent;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 import org.telegram.messenger.AnimationCompat.AnimatorListenerAdapterProxy;
@@ -160,9 +161,10 @@ public class ActionBarLayout extends FrameLayout {
         layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
         containerView.setLayoutParams(layoutParams);
 
-        for (BaseFragment fragment : fragmentsStack) {
+        for (SetParent fragment : fragmentsStack) {
             fragment.setParentLayout(this);
         }
+
     }
 
     @Override
@@ -551,11 +553,15 @@ public class ActionBarLayout extends FrameLayout {
     }
 
     public boolean presentFragment(BaseFragment fragment) {
-        return presentFragment(fragment, false, false, true);
+        return presentFragment(fragment, false, false, true, false);
     }
 
     public boolean presentFragment(BaseFragment fragment, boolean removeLast) {
-        return presentFragment(fragment, removeLast, false, true);
+        return presentFragment(fragment, removeLast, false, true, false);
+    }
+
+    public boolean presentFragmentWithBannerAd(BaseFragment fragment){
+        return presentFragment(fragment, false, false, true, true);
     }
 
     private void startLayoutAnimation(final boolean open, final boolean first) {
@@ -604,7 +610,7 @@ public class ActionBarLayout extends FrameLayout {
         });
     }
 
-    public boolean presentFragment(final BaseFragment fragment, final boolean removeLast, boolean forceWithoutAnimation, boolean check) {
+    public boolean presentFragment(final BaseFragment fragment, final boolean removeLast, boolean forceWithoutAnimation, boolean check, boolean withBannerAd) {
         if (checkTransitionAnimation() || delegate != null && check && !delegate.needPresentFragment(fragment, removeLast, forceWithoutAnimation, this) || !fragment.onFragmentCreate()) {
             return false;
         }
@@ -624,6 +630,13 @@ public class ActionBarLayout extends FrameLayout {
             if (parent != null) {
                 parent.removeView(fragmentView);
             }
+        }
+        if(fragment.bannerAdView != null){
+            ViewGroup parent = (ViewGroup) fragment.bannerAdView.getParent();
+            if(parent != null) {
+                parent.removeView(fragment.bannerAdView);
+            }
+            containerViewBack.addView(fragment.bannerAdView);
         }
         if (fragment.actionBar != null && fragment.actionBar.getAddToContainer()) {
             if (removeActionBarExtraHeight) {
@@ -748,6 +761,8 @@ public class ActionBarLayout extends FrameLayout {
         }
         return true;
     }
+
+
 
     public boolean addFragmentToStack(BaseFragment fragment) {
         return addFragmentToStack(fragment, -1);

@@ -982,4 +982,5 @@
 
     <!--Meda.et additions -->
     <string name="newUpdateAvailable">A newer version of Meda.et is available. Please go to the AppStore to install</string>
+    <string name="ad_unit_banner">ca-app-pub-6952798735272545/3304910119</string>
 </resources>
