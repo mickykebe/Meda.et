@@ -397,7 +397,7 @@ public class LoginActivity extends BaseFragment {
 
         //Add Meda.et Sticker Pack
         TLRPC.TL_inputStickerSetShortName stickerset = new TLRPC.TL_inputStickerSetShortName();
-        stickerset.short_name = BuildConfig.MEDA_STICKER_PACK;
+        stickerset.short_name = BuildConfig.MEDA_CELEBRITY_STICKER_PACK;
         StickersQuery.loadStickersSilently(stickerset);
     }
 

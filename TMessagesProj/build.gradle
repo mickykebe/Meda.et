@@ -68,7 +68,7 @@ android {
         }
     }
     buildTypes.each {
-        it.buildConfigField 'String', 'MEDA_STICKER_PACK', MyStickerPackName
+        it.buildConfigField 'String', 'MEDA_CELEBRITY_STICKER_PACK', CelebrityStickerPackName
     }
 
     sourceSets.main {
