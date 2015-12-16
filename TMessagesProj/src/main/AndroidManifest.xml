@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.telegram.messenger"
     xmlns:tools="http://schemas.android.com/tools"
-    android:installLocation="auto">
+    package="org.telegram.messenger"
+    android:installLocation="auto" >
+
+    <uses-sdk tools:overrideLibrary="com.facebook.ads" />
 
     <supports-screens
         android:anyDensity="true"
@@ -50,8 +52,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
-    <uses-sdk tools:overrideLibrary="com.facebook.ads" />
-
     <application
         android:name=".ApplicationLoader"
         android:allowBackup="false"
@@ -59,13 +59,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/AppName"
         android:largeHeap="true"
-        android:theme="@style/Theme.TMessages.Start">
+        android:theme="@style/Theme.TMessages.Start" >
         <activity
             android:name="org.telegram.ui.LaunchActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="@bool/useHardwareAcceleration"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -136,7 +136,7 @@
             </intent-filter>
             <intent-filter
                 android:icon="@mipmap/ic_launcher"
-                android:priority="1">
+                android:priority="1" >
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -151,7 +151,7 @@
         </activity>
         <activity
             android:name="org.telegram.ui.IntroActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"></activity>
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
         <activity
             android:name="org.telegram.ui.PopupNotificationActivity"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
@@ -159,19 +159,19 @@
             android:launchMode="singleTask"
             android:taskAffinity=""
             android:theme="@style/Theme.TMessages.PopupNotification"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
-        <receiver android:name=".AutoMessageHeardReceiver">
+        <receiver android:name=".AutoMessageHeardReceiver" >
             <intent-filter>
                 <action android:name="org.telegram.messenger.ACTION_MESSAGE_HEARD" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".AutoMessageReplyReceiver">
+        <receiver android:name=".AutoMessageReplyReceiver" >
             <intent-filter>
                 <action android:name="org.telegram.messenger.ACTION_MESSAGE_REPLY" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".SmsListener">
+        <receiver android:name=".SmsListener" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -179,7 +179,7 @@
 
         <service
             android:name=".AuthenticatorService"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -190,7 +190,7 @@
         </service>
         <service
             android:name=".ContactsSyncAdapterService"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
@@ -205,7 +205,7 @@
         <service
             android:name=".TgChooserTargetService"
             android:label="@string/AppName"
-            android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE">
+            android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE" >
             <intent-filter>
                 <action android:name="android.service.chooser.ChooserTargetService" />
             </intent-filter>
@@ -224,7 +224,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <receiver android:name=".MusicPlayerReceiver">
+        <receiver android:name=".MusicPlayerReceiver" >
             <intent-filter>
                 <action android:name="org.telegram.android.musicplayer.close" />
                 <action android:name="org.telegram.android.musicplayer.pause" />
@@ -237,7 +237,7 @@
         </receiver>
         <receiver
             android:name=".AppStartReceiver"
-            android:enabled="true">
+            android:enabled="true" >
             <intent-filter>
                 <action android:name="org.telegram.start" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -271,7 +271,13 @@
             android:resource="@xml/automotive_app_desc" />
 
         <activity android:name="org.telegram.ui.UpdateWindow" />
-        <activity android:name="com.facebook.ads.InterstitialAdActivity" android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.facebook.ads.InterstitialAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
