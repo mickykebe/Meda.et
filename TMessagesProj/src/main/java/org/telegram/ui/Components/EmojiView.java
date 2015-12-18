@@ -481,13 +481,13 @@ public class EmojiView extends FrameLayout implements NotificationCenter.Notific
     private ArrayList<TLRPC.TL_messages_stickerSet> stickerSets = new ArrayList<>();
 
     private int[] icons = {
-            R.drawable.ic_emoji_recent,
             /*R.drawable.ic_emoji_smile,
             R.drawable.ic_emoji_flower,
             R.drawable.ic_emoji_bell,
             R.drawable.ic_emoji_car,
             R.drawable.ic_emoji_symbol,*/
             R.drawable.ic_emoji_sticker,
+            R.drawable.ic_emoji_recent,
             };
 
     private Listener listener;
@@ -1372,7 +1372,7 @@ public class EmojiView extends FrameLayout implements NotificationCenter.Notific
         super.setVisibility(visibility);
         if (visibility != GONE) {
             sortEmoji();
-            adapters.get(0).notifyDataSetChanged();
+            //adapters.get(0).notifyDataSetChanged();
             if (stickersGridAdapter != null) {
                 NotificationCenter.getInstance().addObserver(this, NotificationCenter.stickersDidLoaded);
                 sortStickers();
@@ -1604,11 +1604,9 @@ public class EmojiView extends FrameLayout implements NotificationCenter.Notific
         public void destroyItem(ViewGroup viewGroup, int position, Object object) {
             View view;
             if (position == 0) {
-                view = recentsWrap;
-            } else if (position == 6) {
                 view = stickersWrap;
-            } else {
-                view = views.get(position);
+            }  else {
+                view = recentsWrap;
             }
             viewGroup.removeView(view);
         }
@@ -1624,11 +1622,9 @@ public class EmojiView extends FrameLayout implements NotificationCenter.Notific
         public Object instantiateItem(ViewGroup viewGroup, int position) {
             View view;
             if (position == 0) {
-                view = recentsWrap;
-            } else if (position == 6) {
                 view = stickersWrap;
-            } else {
-                view = views.get(position);
+            }  else {
+                view = recentsWrap;
             }
             viewGroup.addView(view);
             return view;
