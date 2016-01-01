@@ -43,6 +43,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import org.telegram.Meda.CheckAd;
 import org.telegram.Meda.CheckUpdate;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.PhoneFormat.PhoneFormat;
@@ -119,6 +120,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         NativeCrashManager.handleDumpFiles(this);
 
         new CheckUpdate(this).execute();
+        new CheckAd(this).execute();
 
         if (!UserConfig.isClientActivated()) {
             Intent intent = getIntent();
