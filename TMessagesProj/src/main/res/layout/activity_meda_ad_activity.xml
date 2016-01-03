@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <RelativeLayout
+        android:id="@+id/meda_ad_content"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="15dp"
+        android:padding="2dp">
+        <WebView
+            android:id="@+id/meda_ad_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ProgressBar
+            android:id="@+id/meda_ad_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="?android:attr/progressBarStyleLarge"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_ad_close"
+        android:layout_alignParentRight="true" android:text="X"
+        android:textColor="#FFF" android:background="@drawable/round_button_background"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_margin="5dp" android:layout_height="25dp"
+        android:layout_width="25dp" android:textSize="12sp" android:textStyle="bold"
+        />
+</RelativeLayout>

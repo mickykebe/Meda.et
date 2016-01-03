@@ -1,16 +1,18 @@
 package org.telegram.Meda;
 
+/**
+ * Created by Micky on 12/31/2015.
+ */
+
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.telegram.messenger.ApplicationLoader;
-import org.telegram.ui.UpdateWindow;
+import org.telegram.ui.MedaAdActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,47 +20,45 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by Micky on 12/7/2015.
  */
-public class CheckUpdate extends AsyncTask<Void, Void, Boolean> {
+public class CheckAd extends AsyncTask<Void, Void, String> {
     private static final String LOG_TAG = CheckUpdate.class.getSimpleName();
     private Context mContext;
 
-    public CheckUpdate(Context context){
+    public CheckAd(Context context){
         mContext = context;
     }
 
-    private boolean updateExists(String updateJsonStr) throws JSONException{
-        String latestVersion;
-        String installedVersion = Utility.getInstalledAppVersion();
-        boolean forceUpdate = false;
+    private String getAdUrl(String adJsonStr) throws JSONException {
+        String adUrl;
+        boolean showAd = false;
 
-        final String MEDA_KEY_LATEST_VERSION = "version";
-        final String MEDA_KEY_UPDATE_FORCE = "force";
+        final String MEDA_KEY_AD_SHOW = "show";
+        final String MEDA_KEY_AD_URL = "url";
 
-        JSONObject updateJson = new JSONObject(updateJsonStr);
-        latestVersion = updateJson.getString(MEDA_KEY_LATEST_VERSION);
-        forceUpdate = updateJson.getBoolean(MEDA_KEY_UPDATE_FORCE);
+        JSONObject adJson = new JSONObject(adJsonStr);
+        showAd = adJson.getBoolean(MEDA_KEY_AD_SHOW);
+        adUrl = adJson.getString(MEDA_KEY_AD_URL);
 
-        if(forceUpdate && !installedVersion.equals(latestVersion))
-            return true;
+        if(showAd && adUrl != "")
+            return adUrl;
 
-        return false;
+        return null;
     }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
 
         HttpURLConnection urlConnection = null;
         BufferedReader bufferedReader = null;
 
-        String updateJsonStr;
+        String adJsonStr;
 
         try {
-            final String baseUrl = "http://meda.360ground.com/v";
+            final String baseUrl = "http://meda.360ground.com/a";
 
             Uri uri = Uri.parse(baseUrl).buildUpon().build();
 
@@ -71,7 +71,7 @@ public class CheckUpdate extends AsyncTask<Void, Void, Boolean> {
             InputStream inputStream = urlConnection.getInputStream();
 
             if(inputStream == null)
-                return false;
+                return null;
 
             StringBuffer buffer = new StringBuffer();
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -82,10 +82,10 @@ public class CheckUpdate extends AsyncTask<Void, Void, Boolean> {
             }
 
             if(buffer.length() == 0)
-                return false;
+                return null;
 
-            updateJsonStr = buffer.toString();
-            return updateExists(updateJsonStr);
+            adJsonStr = buffer.toString();
+            return getAdUrl(adJsonStr);
         }
         catch(IOException e){
             Log.e(LOG_TAG, "Error retrieving update info", e);
@@ -106,14 +106,15 @@ public class CheckUpdate extends AsyncTask<Void, Void, Boolean> {
             }
         }
 
-        return false;
+        return null;
     }
 
     @Override
-    protected void onPostExecute(Boolean newUpdate) {
-        super.onPostExecute(newUpdate);
-        if(newUpdate) {
-            Intent intent = new Intent(mContext, UpdateWindow.class);
+    protected void onPostExecute(String adUrl) {
+        super.onPostExecute(adUrl);
+        if(adUrl != null) {
+            Intent intent = new Intent(mContext, MedaAdActivity.class)
+                    .putExtra(Intent.EXTRA_TEXT, adUrl);
             mContext.startActivity(intent);
         }
     }
